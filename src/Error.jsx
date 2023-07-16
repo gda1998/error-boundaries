@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 const Error = ({ message }) => {
     return (
         <div className="alert alert-danger" role="alert">
-            <h4 className="alert-heading">Well done!</h4>
+            <h4 className="alert-heading">Error!</h4>
             <p>{ message }</p>
         </div>
     )
