@@ -1,5 +1,5 @@
 import ErrorBoundary from './ErrorBoundary'
-import H1 from './H1'
+import { H1 } from './components'
 
 const App = () => {
     return (
