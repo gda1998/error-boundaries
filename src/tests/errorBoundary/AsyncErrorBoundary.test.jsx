@@ -4,6 +4,9 @@ import AsyncErrorBoundary from '../../errorBoundaries/AsyncErrorBoundary';
 import { InvalidPromise } from '../../components';
 
 describe('Tests in <AsyncErrorBoundary />', () => {
+    console.log = jest.fn();
+    console.error = jest.fn();
+
     const MyComponent = ({ children }) => {
         return (
             <ErrorBoundary>
@@ -20,7 +23,7 @@ describe('Tests in <AsyncErrorBoundary />', () => {
                 <h1>Hello World</h1>
             </MyComponent>
         );
-        const h1Tag = screen.findByRole('heading', { level: 1 });
+        const h1Tag = screen.getByRole('heading', { level: 1 });
         expect(h1Tag).toBeTruthy();
     });
 
@@ -34,17 +37,15 @@ describe('Tests in <AsyncErrorBoundary />', () => {
                 <InvalidComponent />
             </MyComponent>
         );
-        const errorTitleTag = screen.findByText('Error!');
-        expect(errorTitleTag).toBeTruthy();
+        expect(screen.getByText('Error!')).toBeTruthy();
     });
-
+    
     // test('should show AsyncErrorBoundary when an async error is thrown', () => { 
     //     render(
     //         <MyComponent>
     //             <InvalidPromise />
     //         </MyComponent>
     //     );
-    //     const errorMessage = screen.findByText('Api Error');
-    //     expect(errorMessage).toBeTruthy();
+    //     expect(screen.getByText('Api Error')).toBeTruthy();
     // });
 });

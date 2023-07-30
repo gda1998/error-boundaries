@@ -12,7 +12,7 @@ describe('Tests in <ErrorBoundary />', () => {
             </ErrorBoundary>
         );
 
-        const h1Tag = screen.findByRole('heading', { level: 1 });
+        const h1Tag = screen.getByRole('heading', { level: 1 });
         expect(h1Tag).toBeTruthy();
     });
 
@@ -26,7 +26,7 @@ describe('Tests in <ErrorBoundary />', () => {
                 <MyComponent />
             </ErrorBoundary>
         );
-        const h4Tag = screen.findByRole('heading', { level: 4 });
+        const h4Tag = screen.getByRole('heading', { level: 4 });
         expect(h4Tag).toBeTruthy();
     });
 });
