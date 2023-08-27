@@ -1,15 +1,9 @@
 import { useEffect } from 'react';
 
 const InvalidPromise = () => {
-    const loader = async() => Promise.reject('Api Error');
-
     useEffect(() => {
         const load = async() => {
-            try {
-                await loader();
-            } catch (error) {
-                throw error;
-            }
+            await fetch('https://invalid-link.com');
         }
         load();
     }, []);

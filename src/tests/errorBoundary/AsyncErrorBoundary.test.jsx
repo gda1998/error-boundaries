@@ -1,13 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import ErrorBoundary from '../../ErrorBoundary';
+import { useAsyncError } from '../../errorBoundaries';
 import AsyncErrorBoundary from '../../errorBoundaries/AsyncErrorBoundary';
 import { InvalidPromise } from '../../components';
+
+jest.mock('../../errorBoundaries/useAsyncError.jsx');
 
 describe('Tests in <AsyncErrorBoundary />', () => {
     console.log = jest.fn();
     console.error = jest.fn();
 
-    const MyComponent = ({ children }) => {
+    const MyComponent = ({ children, error = '' }) => {
+        useAsyncError.mockReturnValue({
+            error,
+            promiseRejectionHandler: jest.fn(), 
+            resetError: jest.fn(),
+
+        });
+
         return (
             <ErrorBoundary>
                 <AsyncErrorBoundary>
@@ -40,12 +50,14 @@ describe('Tests in <AsyncErrorBoundary />', () => {
         expect(screen.getByText('Error!')).toBeTruthy();
     });
     
-    // test('should show AsyncErrorBoundary when an async error is thrown', () => { 
-    //     render(
-    //         <MyComponent>
-    //             <InvalidPromise />
-    //         </MyComponent>
-    //     );
-    //     expect(screen.getByText('Api Error')).toBeTruthy();
-    // });
+    test('should show AsyncErrorBoundary when an async error is thrown', () => { 
+        // console.warn('ENV: ', import.meta.env);
+        render(
+            <MyComponent error={'Api Error'}>
+                <InvalidPromise />
+            </MyComponent>
+        );
+
+        expect(screen.getByText('Api Error')).toBeTruthy();
+    });
 });

@@ -1,17 +1,9 @@
 import { useEffect } from 'react';
-import { useCallback, useState } from 'react'
 import Error from '../Error';
+import useAsyncError from './useAsyncError';
 
 const AsyncErrorBoundary = ({ children }) => {
-    const [error, setError] = useState('');
-
-    const promiseRejectionHandler = useCallback((e) => {
-        setError(e.reason);
-    }, []);
-
-    const resetError = useCallback(() => {
-        setError('');
-    }, []);
+    const { error, promiseRejectionHandler, resetError } = useAsyncError('');
 
     useEffect(() => {
         window.addEventListener('unhandledrejection', promiseRejectionHandler);
